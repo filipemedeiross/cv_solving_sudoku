@@ -4,3 +4,6 @@ examples
 
 # Environments
 .venv
+
+# Environment optimizations
+__pycache__/

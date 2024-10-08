@@ -65,7 +65,8 @@ if bytes is not None:
     contour = biggest_contour(process)
 
     if contour is None:
-        st.error('No valid contour were found.')
+        with col:
+            st.error('No valid contour were found.')
     else:
         image_grid   = get_perspective(cv2.resize(image  , SHAPE), SHAPE, contour)
         image_sudoku = get_perspective(cv2.resize(process, SHAPE), SHAPE, contour)

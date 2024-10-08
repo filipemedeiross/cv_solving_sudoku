@@ -1,6 +1,5 @@
 import cv2
-import numpy as np
-from .tools     import *
+from .tools import *
 from .constants import *
 
 
@@ -36,10 +35,14 @@ def biggest_contour(image):
 
 def get_perspective(image, shape, contour):
     p1 = reframe(contour)
-    p2 = np.float32([[  0,   0],
-                     [450,   0],
-                     [  0, 450],
-                     [450, 450]])
+    p2 = WARP_POINTS
     m = cv2.getPerspectiveTransform(p1, p2)
+
+    return cv2.warpPerspective(image, m, shape)
+
+def get_perspective_inv(image, shape, contour):
+    p1 = reframe(contour)
+    p2 = WARP_POINTS
+    m = cv2.getPerspectiveTransform(p2, p1)
 
     return cv2.warpPerspective(image, m, shape)

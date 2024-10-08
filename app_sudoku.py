@@ -20,6 +20,7 @@ from sudoku import solver_backtracking
 def load_digit_model(model_path):
     return load_model(model_path)
 
+
 # Configurations
 
 st.set_page_config(page_title='Sudoku solver', layout='wide')

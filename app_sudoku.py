@@ -5,7 +5,6 @@ from keras.models import load_model
 
 from cv import preprocess,          \
                biggest_contour,     \
-               reframe,             \
                get_perspective,     \
                get_perspective_inv, \
                split_cells,         \
@@ -97,18 +96,19 @@ if bytes is not None:
                     else:
                         st.write('No solution.')
 
-                with st.expander('See the answer in augmented reality.', expanded=True):
-                    for grd, ans, cell in zip(grid.flatten()  ,
-                                              answer.flatten(),
-                                              split_cells(image_grid)):
-                        if not grd:
-                            cv2.putText(cell, str(ans), (10, 40), font,
-                                        1, (0, 0, 255), 2, cv2.LINE_AA)
+                if answer is not None:
+                    with st.expander('See the answer in augmented reality.', expanded=True):
+                        for grd, ans, cell in zip(grid.flatten()  ,
+                                                  answer.flatten(),
+                                                  split_cells(image_grid)):
+                            if not grd:
+                                cv2.putText(cell, str(ans), (10, 40), font,
+                                            1, (0, 0, 255), 2, cv2.LINE_AA)
 
-                    resiz = cv2.resize(image, SHAPE)
-                    warp  = get_perspective_inv(image_grid, SHAPE, contour)
-                    aug_image = cv2.addWeighted(resiz, 0.7, warp, 0.3, 0)
+                        resiz = cv2.resize(image, SHAPE)
+                        warp  = get_perspective_inv(image_grid, SHAPE, contour)
+                        aug_image = cv2.addWeighted(resiz, 0.7, warp, 0.3, 0)
 
-                    _, colx2, _ = st.columns([3, 3, 3])
-                    with colx2:
-                         st.image(aug_image)
+                        _, colx2, _ = st.columns([3, 3, 3])
+                        with colx2:
+                            st.image(aug_image)

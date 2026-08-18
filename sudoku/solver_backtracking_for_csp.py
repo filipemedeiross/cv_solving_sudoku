@@ -1,12 +1,15 @@
-from .utils import SudokuCSP, \
-                   assign, unassign, assignment_in_grid, \
-                   select_unassigned_variable, order_domain_values
+from .utils import SudokuCSP                 , \
+                   assign                    , \
+                   unassign                  , \
+                   assignment_in_grid        , \
+                   select_unassigned_variable, \
+                   order_domain_values
 
 
 def backtracking_search(csp):
     assignment = {var : domain[0]
                   for var, domain in csp.domains.items()
-                  if csp.assigned(var)}
+                  if  csp.assigned(var)}
 
     return backtrack(assignment, csp, len(csp.vars))
 
@@ -30,8 +33,8 @@ def backtrack(assignment, csp, vars):
 def solver_csp(csp):
     csp.ac_3()
 
-    assg = backtracking_search(csp)
-    grid = assignment_in_grid(assg)
+    assg = backtracking_search(csp )
+    grid = assignment_in_grid (assg)
 
     return grid
 

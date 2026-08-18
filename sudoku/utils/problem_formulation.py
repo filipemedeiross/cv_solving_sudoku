@@ -1,8 +1,6 @@
 import numpy as np
-from .constants import N,    \
-                       V,    \
-                       STEP, \
-                       SQR
+
+from .constants import N, V, STEP, SQR
 
 
 def flatten_position(pos, inv=False):
@@ -13,19 +11,20 @@ def flatten_position(pos, inv=False):
 
 def square_loc(p):
     """
-    This function delimits the square grid in which a certain position is located
+    This function delimits the square grid in which a certain position is located.
 
     :param pos:
     x or y position of a specific location
 
     :return ([x, y]_initial, [x, y]_final):
-    Tuple containing the initial and final coordinates of the square,
-    on the axis specified by the parameter
+
+    Tuple containing the initial and final coordinates of the
+    square, on the axis specified by the parameter.
     """
     return SQR[p]
 
 def number_constraint(grid, x, y, num):
-    return num not in grid[y]    and \
+    return num not in grid[y   ] and \
            num not in grid[:, x] and \
            num not in grid[slice(*square_loc(y)), slice(*square_loc(x))]
 
@@ -75,4 +74,4 @@ def available_pos(grid):
 def available_nums(grid, x, y):
     return [num
             for num in range(1, N + 1)
-            if number_constraint(grid, x, y, num)]
+            if  number_constraint(grid, x, y, num)]

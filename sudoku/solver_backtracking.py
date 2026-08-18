@@ -1,5 +1,6 @@
 import numpy as np
-from .utils import objective_grid,      \
+
+from .utils import objective_grid     , \
                    first_available_pos, \
                    available_nums
 
@@ -14,12 +15,13 @@ def solver_backtracking(sudoku_grid):
     size = 0
     while not objective_grid(grid):
         move = first_available_pos(grid)
-        nums = available_nums(grid, move[1], move[0])
+        nums = available_nums     (grid, move[1], move[0])
 
         if nums:
-            grid[move] = nums.pop()
+            grid [move] = nums.pop()
             moves[size] = move
             actns[size] = nums
+
             size += 1
         else:
             size -= 1
@@ -31,7 +33,7 @@ def solver_backtracking(sudoku_grid):
 
                 # Undoing each modification to generate the next successor
                 grid[moves[size]] = 0
-                size -= 1
+                size             -= 1
 
             move = moves[size]
             num  = actns[size].pop()

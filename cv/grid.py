@@ -1,11 +1,12 @@
 import cv2
 import numpy as np
+
 from .constants import SHAPE_CELL
 
 
 def get_number(cell):
-    contours, _ = cv2.findContours(cell,
-                                   cv2.RETR_EXTERNAL,
+    contours, _ = cv2.findContours(cell                   ,
+                                   cv2.RETR_EXTERNAL      ,
                                    cv2.CHAIN_APPROX_SIMPLE)
 
     if not contours:
@@ -18,18 +19,20 @@ def get_number(cell):
     x, y, w, h = cv2.boundingRect(contour)
 
     side_length = max(w, h)
+
     x_center = x + w // 2
     y_center = y + h // 2
     x_square = x_center - side_length // 2
     y_square = y_center - side_length // 2
 
-    x_square = max(x_square, 0)
-    y_square = max(y_square, 0)
+    x_square     = max(x_square, 0)
+    y_square     = max(y_square, 0)
     x_square_end = min(x_square + side_length, cell.shape[1])
     y_square_end = min(y_square + side_length, cell.shape[0])
 
     return cell[y_square : y_square_end,
                 x_square : x_square_end]
+
 
 def split_cells(image):
     return [cell
@@ -48,10 +51,10 @@ def get_grid(cells, model):
         cell = cell / 255.
 
         cell = np.expand_dims(cell, axis=[0, -1])
-        pred = model.predict(cell, verbose=0).squeeze()
+        pred = model.predict (cell, verbose=0   ).squeeze()
 
         label = np.argmax(pred)
         if pred[label] >= 0.5:
-            grid[idx] = label
+            grid[idx ] = label
 
     return grid.reshape(9, 9)
